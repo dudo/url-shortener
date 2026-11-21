@@ -52,3 +52,14 @@ docker compose run --rm npm test
 Run `docker compose run --rm npm ci` to refresh the volume after changing dependencies. On the host you can run `npm run typecheck` and `npm test` directly.
 
 [GitHub Actions](https://github.com/dudo/url-shortener/actions) runs the type check and application tests. The tests use in-memory doubles for the repository and cache, and can run without a local `.env`.
+
+### Postgres integration
+
+After copying `.env.example` to `.env`, start Postgres and run the integration check through the npm service.
+
+```sh
+docker compose up -d --wait postgres
+docker compose run --rm npm run test:integration
+```
+
+Each test creates an isolated Postgres schema and uses the in-memory cache double. The suite runs as its own GitHub Actions job.
