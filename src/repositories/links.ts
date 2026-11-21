@@ -17,5 +17,11 @@ export async function createLinkRepository(database: Pick<Pool, 'query'>) {
       );
       return result.rowCount === 1;
     },
+    async update(slug: string, destination: string) {
+      const result = await database.query(
+        'UPDATE links SET destination = $2 WHERE slug = $1', [slug, destination],
+      );
+      return result.rowCount === 1;
+    },
   };
 }

@@ -47,6 +47,9 @@ export async function connectCache(prefix = '') {
         expiration: { type: 'EX', value: 60 },
       }));
     },
+    async delete(key: string) {
+      await bestEffort(() => client.del(prefix + key));
+    },
     close: () => {
       if (client.isOpen) client.destroy();
     },

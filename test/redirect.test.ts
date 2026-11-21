@@ -5,12 +5,12 @@ import { fixture, originalDestination } from './support.ts';
 test('a cache miss reads the repository and fills the cache', async () => {
   const { links, cached } = fixture();
   assert.equal(await links.resolve('docs'), originalDestination);
-  assert.equal(cached.get('redirect:docs'), originalDestination);
+  assert.equal(cached.get('redirect:v2:docs'), originalDestination);
 });
 
 test('a warm cache serves the destination without consulting the repository', async () => {
   const { links, cached, records } = fixture();
-  cached.set('redirect:docs', originalDestination);
+  cached.set('redirect:v2:docs', originalDestination);
   records.clear();
   assert.equal(await links.resolve('docs'), originalDestination);
 });
