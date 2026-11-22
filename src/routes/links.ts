@@ -3,7 +3,7 @@ import { Router, type RequestHandler } from 'express';
 import type { LinkService } from '../services/links.ts';
 import { createLinkHandlers, validateSlug } from '../handlers/links.ts';
 
-const linkMethods = ['GET'];
+const linkMethods = ['GET', 'HEAD'];
 
 export function createLinkRoutes(links: LinkService) {
   const router = Router({ caseSensitive: true, strict: true });
@@ -15,7 +15,6 @@ export function createLinkRoutes(links: LinkService) {
   router.use('/r', cors({ methods: linkMethods }));
   router.param('slug', validateSlug);
   router.route('/r/:slug')
-    .head(methodNotAllowed)
     .get(redirect)
     .all(methodNotAllowed);
 
